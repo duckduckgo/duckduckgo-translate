@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Test::More;
 use utf8::all;
+use Test::utf8;
  
 use FindBin qw($Bin);
 
@@ -28,10 +29,16 @@ is(
 	"other simple"
 );
 
+my $umlaut_trans = l("Umlaut-Test");
+
 is(
-	l("Umlaut-Test"),
+	$umlaut_trans,
 	'Dies ist ein Ümläut',
 	"Umlaut Test"
 );
+
+is_valid_string($umlaut_trans);
+is_sane_utf8($umlaut_trans);
+is_flagged_utf8($umlaut_trans);
 
 done_testing;

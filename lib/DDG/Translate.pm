@@ -100,7 +100,7 @@ sub ldnp {
 	} else {
 		$return = sprintf(dnpgettext($td, $ctxt, $id, $idp, $n),@args);
 	}
-	utf8::decode($return);
+	Encode::_utf8_on($return);
 	return $return;
 }
 
