@@ -19,6 +19,9 @@ msgstr[1] "Du hast %d AndereNachrichten"
 msgid "Hello"
 msgstr "Anderes Hallo"
 
+msgid "Umlaut-Test"
+msgstr "Dies ist ein Ümläut"
+
 msgid "Change order test %s %s"
 msgstr "Ganz andere Reihenfolge hier %2$s %1$s"
 

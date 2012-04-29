@@ -3,6 +3,7 @@ package DDG::Translate;
 
 use strict;
 use warnings;
+use utf8::all;
 
 use Exporter 'import';
 use Locale::gettext_pp qw(:locale_h :libintl_h);
@@ -33,6 +34,13 @@ my $nowrite;
 
 my %tds;
 my $dir;
+
+sub gettext_escape {
+	my ( $content ) = @_;
+	$content =~ s/\n/\\n/g;
+	$content =~ s/"/\\"/g;
+	return $content;
+}
 
 sub coderef_hash {{
 	l => sub { l(@_) },
@@ -78,19 +86,22 @@ sub ldnp {
 	my ($td, $ctxt, $id, $idp, $n) = (shift,shift,shift,shift,shift);
 	my @args = @_;
 	unshift @args, $n if $idp;
+	my $return;
 	if ($dry) {
 		if (!$nowrite) {
 			my @save;
 			push @save, '# domain: '.$td if $td;
-			push @save, 'msgctxt "'.$ctxt.'"' if $ctxt;
-			push @save, 'msgid "'.$id.'"';
-			push @save, 'msgid_plural "'.$idp.'"' if $idp;
+			push @save, 'msgctxt "'.gettext_escape($ctxt).'"' if $ctxt;
+			push @save, 'msgid "'.gettext_escape($id).'"';
+			push @save, 'msgid_plural "'.gettext_escape($idp).'"' if $idp;
 			wd(@save);
 		}
-		return sprintf($idp && $n != 1 ? $idp : $id, @args);
+		$return = sprintf($idp && $n != 1 ? $idp : $id, @args);
 	} else {
-		return sprintf(dnpgettext($td, $ctxt, $id, $idp, $n),@args);
+		$return = sprintf(dnpgettext($td, $ctxt, $id, $idp, $n),@args);
 	}
+	utf8::decode($return);
+	return $return;
 }
 
 sub ltd {
