@@ -3,7 +3,6 @@ package DDG::Translate;
 
 use strict;
 use warnings;
-use utf8::all;
 
 use Exporter 'import';
 use Locale::gettext_pp qw(:locale_h :libintl_h);
@@ -100,7 +99,6 @@ sub ldnp {
 	} else {
 		$return = sprintf(dnpgettext($td, $ctxt, $id, $idp, $n),@args);
 	}
-	Encode::_utf8_on($return);
 	return $return;
 }
 
