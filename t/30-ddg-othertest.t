@@ -7,6 +7,7 @@ use Test::More;
 use FindBin qw($Bin);
 
 use DDG::Translate;
+use utf8;
 
 l_dir($Bin.'/data/locale');
 l_lang('de_DE');

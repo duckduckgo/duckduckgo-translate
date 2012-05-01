@@ -6,6 +6,7 @@ use warnings;
 
 use Exporter 'import';
 use Locale::gettext_pp qw(:locale_h :libintl_h);
+use Encode qw( decode_utf8 );
 
 use IO::All -utf8;
 
@@ -99,7 +100,8 @@ sub ldnp {
 	} else {
 		$return = sprintf(dnpgettext($td, $ctxt, $id, $idp, $n),@args);
 	}
-	return $return;
+	# Fixing bad utf8 handling
+	return decode_utf8($return);
 }
 
 sub ltd {
